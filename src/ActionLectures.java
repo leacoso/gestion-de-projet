@@ -1,3 +1,5 @@
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -24,19 +26,10 @@ public class ActionLectures implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        /*JPanel newpage = new JPanel();
-        newpage.setLayout(null);
-        Menu.pages.push(newpage);
-        frame.setContentPane(newpage);
-        frame.revalidate();
-        frame.repaint();*/
-        
         String action = e.getActionCommand(); 
-        System.out.println(action);  
         String[] list = action.split(",");
-        
         Lecture lecture = find_Lecture(list[0].trim(), list[1].trim());
-        
+
         JButton generate_student_list = new JButton("Generate the student list");
         generate_student_list.setBounds(100, 40, 150, 25);
         frame.add(generate_student_list);
@@ -63,7 +56,11 @@ public class ActionLectures implements ActionListener {
         add_project.addActionListener(new ActionProjects("Add a new project", frame, lecture));
         remove_project.addActionListener(new ActionProjects("Remove a project", frame, lecture));
         check_project.addActionListener(new ActionProjects("Check my projects", frame, lecture));
-
+        Container contentPane = frame.getContentPane(); 
+            Component[] components = contentPane.getComponents(); 
+            for (int i = 0 ; i<components.length; i++ ){
+                System.out.println(components[i].getClass()); 
+            }   
         }
 }
   

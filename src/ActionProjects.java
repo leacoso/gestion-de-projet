@@ -26,9 +26,8 @@ public class ActionProjects implements ActionListener{
         switch (action){
 
             //case "Generate the student list" :
-            case "Add a new project": 
-            //JButton b = (JButton )e.getSource(); 
-            //JPanel p = (JPanel) b.getParent();       
+            case "Add a new project":
+            
             create_project(frame, lecture); 
             break ; 
 
@@ -70,29 +69,20 @@ public class ActionProjects implements ActionListener{
         nameproject_text.setVisible(true);
         deadline_text.setVisible(true);
         create_project.setVisible(true);
-        //frame.add(p);
         frame.revalidate();
         frame.repaint();
         create_project.addActionListener(new ActionListener() {
+
             @Override
-
-            
             public void actionPerformed(ActionEvent e){
-            System.out.println("coucou"); 
             Container contentPane = frame.getContentPane(); 
-            //JButton bouton = (JButton) e.getSource();
-            //JPanel panel = (JPanel)bouton.getParent();
             Component[] components = contentPane.getComponents(); 
-            for (int i = 0 ; i<components.length; i++ ){
-                System.out.println(components[i].getClass()); 
-
-            }
             String subject = ((JTextField)(contentPane.getComponent(6))).getText();; 
             String deadline = ((JTextField)(contentPane.getComponent(7))).getText();
             Project pro = new Project(lecture, subject, new MyDate(deadline)); 
             String t = " Your project  has been successfully created \n"  + pro.toString() ;   
             JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
-                   
+            
             texte.setBounds(500, 300, 1000, 1000);
             texte.setHorizontalAlignment(JLabel.CENTER);
             texte.setVerticalAlignment(JLabel.CENTER);
@@ -102,25 +92,34 @@ public class ActionProjects implements ActionListener{
             frame.repaint();
             frame.add(texte);
             for (int i = 4; i<= 8 ; i++){
-                
                 frame.remove(components[i]);  
-
             }
-            
             frame.revalidate();
             frame.repaint();
+            JButton ok = new JButton("OK");
+            ok.setBounds(500, 400, 150, 25);
+            frame.add(ok); 
+            ok.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    Container contentPane = frame.getContentPane(); 
+                    Component[] components = contentPane.getComponents(); 
+                    frame.remove(components[4]);
+                    frame.remove(components[5]);
+                    frame.revalidate(); 
+                    frame.repaint();
+                }
+            });
 
-            
-            
             }
-    }
-        );
-   
-    
-        }
 
-       
+    });
 
 }
+
+    
+}
+
+
     
 
