@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class ActionProjects implements ActionListener{
-    public Project project ; 
     public JFrame frame ; 
     public String action ; 
     public Lecture lecture ;
@@ -27,19 +26,22 @@ public class ActionProjects implements ActionListener{
 
             //case "Generate the student list" :
             case "Add a new project":
-            
-            create_project(frame, lecture); 
+            create_project(); 
             break ; 
 
             case "Remove a project":
+            remove_project();
+            break; 
              
 
             case "Check my projects":
+            check_my_projects();
+            break; 
         }
     }
 
-    public static void create_project(JFrame frame, Lecture lecture) {
-                
+    public void create_project() {
+    
         JLabel nameproject = new JLabel("Project Name");
         nameproject.setBounds(300, 200, 150, 25);
         frame.add(nameproject);
@@ -117,7 +119,14 @@ public class ActionProjects implements ActionListener{
 
 }
 
-    
+    public void remove_project(){
+        
+    }
+
+    public void check_my_projects(){
+
+    }
+
 }
 
 
