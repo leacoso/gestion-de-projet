@@ -8,33 +8,34 @@ public class Menu {
     public static Stack<JPanel> pages = new Stack<>();
 
     public static void identification(JFrame frame){
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        //JPanel panel = new JPanel();
+        //panel.setLayout(null);
+        frame.setLayout(null);
         JLabel userLabel = new JLabel("Nom d'utilisateur ");
         userLabel.setBounds(300, 60, 150, 25);
-        panel.add(userLabel);
+        frame.add(userLabel);
         JLabel passwordLabel = new JLabel("Mot de passe");
         passwordLabel.setBounds(300, 100, 150, 25);
-        panel.add(passwordLabel);
+        frame.add(passwordLabel);
         JTextField usertext = new JTextField(20);
         usertext.setBounds(500, 60, 150, 25);
-        panel.add(usertext);
+        frame.add(usertext);
         JTextField passtext = new JTextField(20);
         passtext.setBounds(500, 100, 150, 25);
-        panel.add(passtext);
+        frame.add(passtext);
         JButton bouttonid = new JButton("S'identifier");
         bouttonid.setBounds(500, 260, 150, 25);
-        panel.add(bouttonid);
+        frame.add(bouttonid);
         JLabel errorMessage = new JLabel("");
         errorMessage.setBounds(600, 300, 250, 25);
-        panel.add(errorMessage);
+        frame.add(errorMessage);
         userLabel.setVisible(true);
         passwordLabel.setVisible(true);
         usertext.setVisible(true);
         passtext.setVisible(true);
         bouttonid.setVisible(true);
-        pages.push(panel);
-        frame.add(panel);
+        //pages.push(panel);
+        //frame.add(panel);
         bouttonid.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -49,14 +50,13 @@ public class Menu {
                     passtext.setVisible(false);
                     bouttonid.setVisible(false);
                     errorMessage.setVisible(false);
-                    panel.removeAll();
-                    panel.revalidate();
-                    panel.repaint();
+                    frame.getContentPane().removeAll();
+                    frame.revalidate();
+                    frame.repaint();
                     Teacher teacher = Teacher.get_teacher(user); 
                     createMenu(frame, teacher);
                 }
             }
-
         });
     }
 

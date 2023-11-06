@@ -1,6 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -18,6 +18,7 @@ public class Parametre implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch (action) {
             case "Deconnexion": 
+
             JMenuBar menubar = frame.getJMenuBar();
             menubar.removeAll();
             frame.getContentPane().removeAll();
@@ -26,6 +27,7 @@ public class Parametre implements ActionListener{
             Menu.identification(frame);
             frame.revalidate();
             frame.repaint();
+            
             break ; 
 
             case "A propos":
