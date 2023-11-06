@@ -12,8 +12,6 @@ public class ActionProjects implements ActionListener{
     public String action ; 
     public Lecture lecture ;
  
-
-
     public ActionProjects(String action, JFrame frame, Lecture lecture){
         this.frame = frame ; 
         this.action = action; 
@@ -22,8 +20,7 @@ public class ActionProjects implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        switch (action){
-
+        switch (action) {
             //case "Generate the student list" :
             case "Add a new project":
             create_project(); 
@@ -34,8 +31,8 @@ public class ActionProjects implements ActionListener{
             break; 
              
 
-            case "Check my projects":
-            check_my_projects();
+            case "My projects":
+            my_projects();
             break; 
         }
     }
@@ -43,29 +40,38 @@ public class ActionProjects implements ActionListener{
     public void create_project() {
     
         JLabel nameproject = new JLabel("Project Name");
-        nameproject.setBounds(300, 200, 150, 25);
+        nameproject.setBounds(100, 200, 150, 25);
         frame.add(nameproject);
 
         JLabel deadline = new JLabel("Deadline");
-        deadline.setBounds(300, 240, 150, 25);
+        deadline.setBounds(100, 230, 150, 25);
         frame.add(deadline);
 
+        JLabel explication = new JLabel("Explication");
+        explication.setBounds(100, 250, 150, 25);
+        frame.add(explication);
 
         JTextField nameproject_text = new JTextField(20);
-        nameproject_text.setBounds(500, 200, 150, 25);
+        nameproject_text.setBounds(300, 200, 300, 25);
         frame.add(nameproject_text);
 
 
         JTextField deadline_text = new JTextField(20);
-        deadline_text.setBounds(500, 240, 150, 25);
+        deadline_text.setBounds(300, 230, 300, 25);
         frame.add(deadline_text);
-    
+
+        JTextField explication_text = new JTextField(20);
+        explication_text.setBounds(300, 250, 300, 100);
+        frame.add(explication_text);
+
         JButton create_project = new JButton("Create project");
-        create_project.setBounds(400, 300, 150, 25);
+        create_project.setBounds(300, 400, 150, 25);
         frame.add(create_project);
 
         frame.revalidate();
         frame.repaint();
+        explication.setVisible(true);
+        explication_text.setVisible(true);
         nameproject.setVisible(true);
         deadline.setVisible(true);
         nameproject_text.setVisible(true);
@@ -79,13 +85,15 @@ public class ActionProjects implements ActionListener{
             public void actionPerformed(ActionEvent e){
             Container contentPane = frame.getContentPane(); 
             Component[] components = contentPane.getComponents(); 
-            String subject = ((JTextField)(contentPane.getComponent(6))).getText();; 
-            String deadline = ((JTextField)(contentPane.getComponent(7))).getText();
-            Project pro = new Project(lecture, subject, new MyDate(deadline)); 
+            String subject = ((JTextField)(contentPane.getComponent(7))).getText();
+            String deadline = ((JTextField)(contentPane.getComponent(8))).getText();
+            String explication = ((JTextField)(contentPane.getComponent(9))).getText();
+            Project pro = new Project(lecture, subject, new MyDate(deadline), explication); 
             String t = " Your project  has been successfully created \n"  + pro.toString() ;   
             JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
-            
-            texte.setBounds(500, 300, 1000, 1000);
+            texte.setHorizontalAlignment(JLabel.CENTER);
+            texte.setVerticalAlignment(JLabel.CENTER);
+            texte.setBounds(300, 400, 150, 25);
             texte.setHorizontalAlignment(JLabel.CENTER);
             texte.setVerticalAlignment(JLabel.CENTER);
             texte.setBounds(0, 0, texte.getWidth(), texte.getHeight());
@@ -93,13 +101,14 @@ public class ActionProjects implements ActionListener{
             frame.revalidate(); 
             frame.repaint();
             frame.add(texte);
-            for (int i = 4; i<= 8 ; i++){
+            for (int i = 4; i<= 10 ; i++){
                 frame.remove(components[i]);  
             }
             frame.revalidate();
             frame.repaint();
             JButton ok = new JButton("OK");
-            ok.setBounds(500, 400, 150, 25);
+            
+            ok.setBounds(300, 600, 150, 25);
             frame.add(ok); 
             ok.addActionListener(new ActionListener() {
                 @Override
@@ -123,7 +132,19 @@ public class ActionProjects implements ActionListener{
         
     }
 
-    public void check_my_projects(){
+    public void my_projects(){
+
+        JButton grade_students = new JButton("Grade students"); 
+        grade_students.setBounds(100, 250, 150, 25);
+        frame.add(grade_students);
+
+        JButton check = new JButton("check all my projects"); 
+        check.setBounds(100, 280, 200, 25);
+        frame.add(check);
+        grade_students.setVisible(true);
+        check.setVisible(true);
+        frame.revalidate();
+        frame.repaint();
 
     }
 

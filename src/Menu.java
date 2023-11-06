@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,8 +11,7 @@ public class Menu {
     public static Stack<JPanel> pages = new Stack<>();
 
     public static void identification(JFrame frame){
-        //JPanel panel = new JPanel();
-        //panel.setLayout(null);
+        
         frame.setLayout(null);
         JLabel userLabel = new JLabel("Nom d'utilisateur ");
         userLabel.setBounds(300, 60, 150, 25);
@@ -34,8 +36,6 @@ public class Menu {
         usertext.setVisible(true);
         passtext.setVisible(true);
         bouttonid.setVisible(true);
-        //pages.push(panel);
-        //frame.add(panel);
         bouttonid.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -90,6 +90,11 @@ public class Menu {
         deconnexion.addActionListener(new Parametre(frame, "Deconnexion")); 
         }
 
+    public static void refresh(JFrame frame){
+        Container contentPane = frame.getContentPane(); 
+        Component[] components = contentPane.getComponents(); 
+        for (int i = 0 ; i< components.length; i++){frame.remove(components[i]);  }
+    }
         public static void main(String[] args) {
         JFrame frame = new JFrame("Menu");
         frame.setVisible(true);

@@ -1,9 +1,12 @@
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JTextField;
 
 public class Parametre implements ActionListener{
     private JFrame frame ;  
@@ -14,9 +17,12 @@ public class Parametre implements ActionListener{
         this.action = action; }
 
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        Menu.refresh(frame);
         switch (action) {
+
             case "Deconnexion": 
 
             JMenuBar menubar = frame.getJMenuBar();
@@ -31,16 +37,15 @@ public class Parametre implements ActionListener{
             break ; 
 
             case "A propos":
-            frame.getContentPane().removeAll();
-            
+
+            frame.revalidate(); 
+            frame.repaint(); 
             String resume = "Gestion des étudiants : permet de créer et de gérer les profils des étudiants, y compris leurs informations personnelles, leurs compétences et leurs projets.\n Gestion des binômes projet : permet de créer et de gérer les binômes projet, y compris les étudiants qui les composent et les rôles de chacun.\n" +
             "Gestion des tâches : permet de créer et de gérer les tâches, y compris leurs descriptions, leurs deadlines et leurs statuts.\n" +
-                            "Gestion des deadlines : permet de définir et de suivre les deadlines des tâches.\n" +
-                            "Gestion des réunions : permet de planifier et de suivre les réunions.\n" +
-                            "Avantages\n" +
-                            "\n" +
-                            "L'application offre plusieurs avantages aux étudiants, notamment :\n" +
-                            "\n" +
+            "Gestion des deadlines : permet de définir et de suivre les deadlines des tâches.\n" +
+            "Gestion des réunions : permet de planifier et de suivre les réunions.\n" +
+            "Avantages\n" + "\n" + "L'application offre plusieurs avantages aux étudiants, notamment :\n" + "\n" +
+            
                             "Une meilleure organisation : l'application permet aux étudiants de mieux organiser leurs projets en centralisant toutes les informations et les tâches dans un seul endroit.\n" +
                             "Une meilleure communication : l'application permet aux étudiants de communiquer plus facilement entre eux et avec les professeurs.\n" +
                             "Une meilleure collaboration : l'application permet aux étudiants de collaborer plus efficacement sur leurs projets.\n" +
@@ -59,14 +64,34 @@ public class Parametre implements ActionListener{
                             "L'application de gestion de projets pour les étudiants de Dauphine est un outil précieux qui peut aider les étudiants à réussir leurs projets. Elle est facile à utiliser et offre de nombreuses fonctionnalités pour améliorer l'organisation, la communication et la collaboration.\n" +
                             "\n" +
                             "J'ai ajouté une ligne vide à la fin pour faciliter la lecture.";
+
+            frame.setLayout(null); 
+            JLabel message = new JLabel("<html>" + resume.replace("\n", "<br/>") + "</html>");            
+            message.setBounds(20, 20, 960, 560);
+            frame.add(message);
+            message.setVisible(true);
+            frame.revalidate(); 
+            frame.repaint(); 
+            
+
+
+
+            /*frame.setLayout(null);
+            frame.getContentPane().removeAll();
+            Container contentPane = frame.getContentPane(); 
+            Component[] components = contentPane.getComponents(); 
+            for (int i = 0 ; i< components.length; i++){System.out.println(components[i].getClass() ); }*/
+            
     
-            JLabel label = new JLabel("<html>" + resume.replace("\n", "<br/>") + "</html>");
-            frame.add(label);
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Fermer l'application quand la fenêtre est fermée
+            
+            
+        
+            /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+            label.setVisible(true);
             frame.setVisible(true);
             frame.revalidate();
-            frame.repaint();
+            frame.repaint();*/
             break; 
                     
                 }

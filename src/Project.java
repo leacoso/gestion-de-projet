@@ -5,12 +5,14 @@ public class Project {
     private Lecture matiere ; 
     private String sujet ; 
     private MyDate deadline ;
+    private String explication ; 
     private int nombre_de_groupes = 0 ; 
     private static int nb_id = 1 ;  
     
-    public Project(Lecture matiere, String sujet, MyDate myDate){
+    public Project(Lecture matiere, String sujet, MyDate myDate, String explication){
         id = nb_id ; 
         nb_id++ ;
+        this.explication = explication; 
         this.matiere = matiere;
         this.sujet = sujet;
         deadline = myDate;
@@ -24,6 +26,7 @@ public class Project {
         sujet = null; 
         matiere = null; 
         deadline = null ; 
+        explication = null; 
     }
     public int getid() {
         return id;
