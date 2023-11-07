@@ -5,8 +5,6 @@ public class Student extends Person {
     private Education education ; 
     private List<Project> projects;
  
-
-
     public Student(String pe, String nom){
         super(pe, nom); 
     }
@@ -16,7 +14,6 @@ public class Student extends Person {
         this.education = education; 
         this.student_number = student_number ;  
         this.projects = projects ; 
-          
     }
     
     public void set_formation (Education f){education = f; }

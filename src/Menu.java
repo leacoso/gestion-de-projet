@@ -94,7 +94,7 @@ public class Menu {
         Container contentPane = frame.getContentPane(); 
         Component[] components = contentPane.getComponents(); 
         for (int i = 0 ; i< components.length; i++){frame.remove(components[i]);  }
-    }
+        }
         public static void main(String[] args) {
         JFrame frame = new JFrame("Menu");
         frame.setVisible(true);

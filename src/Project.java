@@ -17,6 +17,7 @@ public class Project {
         this.sujet = sujet;
         deadline = myDate;
         nombre_de_groupes = 0;
+        
     }
    
     public Project(){
@@ -28,6 +29,7 @@ public class Project {
         deadline = null ; 
         explication = null; 
     }
+
     public int getid() {
         return id;
     }
@@ -48,11 +50,11 @@ public class Project {
         return sujet;
     }
 
-    public void setDate_de_remise(MyDate deadline) {
+    public void setdeadline(MyDate deadline) {
         this.deadline = deadline;
     }
 
-    public MyDate getDate_de_remise() {
+    public MyDate getdeadline() {
         return deadline;
     }
 

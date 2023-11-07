@@ -38,6 +38,7 @@ public class MyDate {
         if (deadline.month == 12){
             if (rendu.month < 11 ){return 0; }
         }
+        
         if (rendu.month - deadline.month > 1){return 0; }
         if (rendu.month - deadline.month == 1){
             return (31 - deadline.day) + rendu.day ; 
