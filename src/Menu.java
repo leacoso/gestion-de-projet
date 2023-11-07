@@ -5,10 +5,8 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Menu {
-    public static Stack<JPanel> pages = new Stack<>();
 
     public static void identification(JFrame frame){
         

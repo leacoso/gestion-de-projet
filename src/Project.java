@@ -69,6 +69,7 @@ public class Project {
     public String toString(){
         return " ID :  " + String.valueOf(id) + " \n  Subject : "   +  sujet + "\n deadline  : " + deadline.toString(); 
     }
+
    
 
 }

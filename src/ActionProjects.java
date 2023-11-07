@@ -2,6 +2,10 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -89,14 +93,11 @@ public class ActionProjects implements ActionListener{
             String deadline = ((JTextField)(contentPane.getComponent(8))).getText();
             String explication = ((JTextField)(contentPane.getComponent(9))).getText();
             Project pro = new Project(lecture, subject, new MyDate(deadline), explication); 
-            String t = " Your project  has been successfully created \n"  + pro.toString() ;   
+            String t = " Your project  has been successfully created \n"  + pro.toString() + "\n If you want to add pairs, go to 'My projects', select your project and add yours pairs there ";   
             JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
-            texte.setHorizontalAlignment(JLabel.CENTER);
-            texte.setVerticalAlignment(JLabel.CENTER);
-            texte.setBounds(300, 400, 150, 25);
-            texte.setHorizontalAlignment(JLabel.CENTER);
-            texte.setVerticalAlignment(JLabel.CENTER);
-            texte.setBounds(0, 0, texte.getWidth(), texte.getHeight());
+            texte.setLayout(null);
+            texte.setBounds(300, 400, 1000, 100);
+            
             texte.setVisible(true);
             frame.revalidate(); 
             frame.repaint();
@@ -106,11 +107,11 @@ public class ActionProjects implements ActionListener{
             }
             frame.revalidate();
             frame.repaint();
-            JButton ok = new JButton("OK");
+            JButton OK = new JButton("OK");
             
-            ok.setBounds(300, 600, 150, 25);
-            frame.add(ok); 
-            ok.addActionListener(new ActionListener() {
+            OK.setBounds(300, 600, 150, 25);
+            frame.add(OK); 
+            OK.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
                     Container contentPane = frame.getContentPane(); 
@@ -121,30 +122,28 @@ public class ActionProjects implements ActionListener{
                     frame.repaint();
                 }
             });
-
             }
-
     });
-
 }
-
     public void remove_project(){
         
     }
 
-    public void my_projects(){
+    public void my_projects(){ 
 
         JButton grade_students = new JButton("Grade students"); 
         grade_students.setBounds(100, 250, 150, 25);
         frame.add(grade_students);
 
-        JButton check = new JButton("check all my projects"); 
+        JButton check = new JButton("Check all my projects"); 
         check.setBounds(100, 280, 200, 25);
         frame.add(check);
         grade_students.setVisible(true);
         check.setVisible(true);
         frame.revalidate();
         frame.repaint();
+
+
 
     }
 

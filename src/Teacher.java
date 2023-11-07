@@ -54,10 +54,6 @@ public class Teacher extends Person {
     }
     public static void ajout_user_subject(String user, ArrayList<String> sub){user_subject.put(user, sub); }
     public static void ajout_user_teacher(String user, Teacher t){user_teacher.put(user, t); }
-    
 
-    
-    
-    
 }
 

@@ -72,26 +72,6 @@ public class Parametre implements ActionListener{
             message.setVisible(true);
             frame.revalidate(); 
             frame.repaint(); 
-            
-
-
-
-            /*frame.setLayout(null);
-            frame.getContentPane().removeAll();
-            Container contentPane = frame.getContentPane(); 
-            Component[] components = contentPane.getComponents(); 
-            for (int i = 0 ; i< components.length; i++){System.out.println(components[i].getClass() ); }*/
-            
-    
-            
-            
-        
-            /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-            label.setVisible(true);
-            frame.setVisible(true);
-            frame.revalidate();
-            frame.repaint();*/
             break; 
                     
                 }
