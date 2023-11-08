@@ -1,4 +1,5 @@
-
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Project {
     private int id; 
@@ -8,6 +9,7 @@ public class Project {
     private String explication ; 
     private int nombre_de_groupes = 0 ; 
     private static int nb_id = 1 ;  
+    public static HashMap<Project, ArrayList<Pair> > list_project_pair ; 
     
     public Project(Lecture matiere, String sujet, MyDate myDate, String explication){
         id = nb_id ; 
@@ -17,9 +19,9 @@ public class Project {
         this.sujet = sujet;
         deadline = myDate;
         nombre_de_groupes = 0;
-        
+        add_project(); 
     }
-   
+
     public Project(){
         id = nb_id ; 
         nb_id++ ; 
@@ -30,6 +32,18 @@ public class Project {
         explication = null; 
     }
 
+    public void add_project(){
+        list_project_pair.put(this, new ArrayList<Pair>); 
+    }
+
+    public static void add_pair_to_project(Project project, Pair p){
+        list_project_pair.get(project).add(p); 
+    }
+
+    public static void add_pairs_to_project(Project project , ArrayList<Pair> list_pairs){
+        list_project_pair.get(project).addAll(list_pairs); 
+    }
+   
     public int getid() {
         return id;
     }

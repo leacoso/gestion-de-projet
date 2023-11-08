@@ -1,11 +1,11 @@
-public class Binome {
+public class Pair {
     private Project project ; 
     private Student student1 ; 
     private Student student2 ; 
     private MyDate due_date ; 
     private int id ; 
 
-    public Binome(Project project, Student student1, Student student2, MyDate due_date ){
+    public Pair(Project project, Student student1, Student student2, MyDate due_date ){
         this.project = project; 
         this.student1 = student1; 
         this.student2 = student2 ; 

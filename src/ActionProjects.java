@@ -20,8 +20,8 @@ public class ActionProjects implements ActionListener{
         this.frame = frame ; 
         this.action = action; 
         this.lecture = lecture ; 
-
     }
+    
     @Override
     public void actionPerformed(ActionEvent e){
         switch (action) {
