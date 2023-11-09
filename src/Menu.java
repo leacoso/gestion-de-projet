@@ -5,6 +5,9 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Menu {
 
@@ -68,7 +71,8 @@ public class Menu {
         menubar.add(mes_cours); 
 
         //ADD ALL THE SUBJECTS OH THE TEACHER 
-        ArrayList<String> subjects = Teacher.get_subject(user);  
+        ArrayList<Lecture> lecture = Teacher.get_subject(user); 
+        ArrayList<String> subjects = Teacher.lecture_to_string(lecture);  
         for (String sub : subjects){
             JMenuItem cours = new JMenuItem(sub); 
             mes_cours.add(cours);
@@ -88,29 +92,47 @@ public class Menu {
         deconnexion.addActionListener(new Parametre(frame, "Deconnexion")); 
         }
 
-    public static void refresh(JFrame frame){
+    public static void refresh(JFrame frame, int j){
+
         Container contentPane = frame.getContentPane(); 
         Component[] components = contentPane.getComponents(); 
-        for (int i = 0 ; i< components.length; i++){frame.remove(components[i]);  }
+        for (int i = j ; i< components.length; i++){
+            frame.remove(components[i]);
+          }
+        frame.revalidate();
+        frame.repaint();
         }
+
+
+
         public static void main(String[] args) {
         JFrame frame = new JFrame("Menu");
         frame.setVisible(true);
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ArrayList<String> list = new ArrayList<>();
-        list.add("maths,M1"); 
-        list.add("info,M2");  
+        List.get_list_education(); 
+        //System.out.println(list_education);
+        List.get_list_student();
+        //System.out.println(student_list); 
+        List.get_lecture_education();
+        Set<Lecture> keys = List.lecture_education.keySet(); // Liste de tous les cours 
+        for (Lecture key : keys) {
+            key.lecture_student_list();  
+        } 
+        ArrayList<Lecture> lectures = new ArrayList<>(keys);
+        List.list_lecture = lectures; 
 
-        Teacher t = new Teacher("Lea", "lahyani", "1", "OK",list); 
+         
+        ArrayList<Lecture> listp = new ArrayList<>(); 
+        listp.add(lectures.get(0)); 
+        listp.add(lectures.get(5)); 
+        listp.add(lectures.get(3)); 
+        Teacher t1 = new Teacher ("gab", "lahyani", "1", "OK", listp);
         System.out.println(Teacher.get_subject("OK")); 
-       
         Teacher.ajout_user_password("1", "OK"); 
-        Teacher.ajout_user_subject("1", list); 
-        Teacher.ajout_user_teacher("1", t);
+        Teacher.ajout_user_subject("1", listp); 
+        Teacher.ajout_user_teacher("1", t1);
         identification(frame);
-
-       
     }
 
 }

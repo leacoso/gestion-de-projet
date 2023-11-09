@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -7,19 +6,17 @@ import java.util.Set;
 public class List {
     public static ArrayList<Student> student_list = new ArrayList<>();  
     public static HashMap<Lecture,ArrayList<Education>> lecture_education = new HashMap<>();  
+    public static ArrayList<Lecture> list_lecture = new ArrayList<>(); 
     public static ArrayList<Education> list_education = new ArrayList<>(); 
     public static HashMap<Education, ArrayList<Student>> list_education_student = new HashMap<Education, ArrayList<Student>>(); 
-
-
+    
     public static void get_list_education(){
     //L3
-
     list_education.add( new Education ("MIAGE","Alternance", "L3")); 
     list_education.add( new Education ("MIAGE","Initiale", "L3"));
     list_education.add( new Education ("IDD","Initiale", "L3"));
     list_education.add( new Education ("MIAGE","Continue", "L3"));
-    list_education.add( new Education ("IDD","Continue", "L3"));
-
+    list_education.add( new Education ("IDD","Continue", "L3")) ; 
     //M1
     list_education.add( new Education ("MIAGE","Alternance", "M1")); 
     list_education.add( new Education ("MIAGE","Initiale", "M1"));
@@ -31,10 +28,10 @@ public class List {
     list_education.add( new Education ("MIAGE_ID","Alternance", "M2"));
     list_education.add( new Education ("MIAGE_ID","Initiale", "M2"));
     list_education.add( new Education ("MIAGE_IF","Alternance", "M2"));
-    list_education.add( new Education ("MODO","Initiale", "M2"));
+    list_education.add( new Education ("MODO","Initiale", "M2")); 
     list_education.add( new Education ("MIAGE_STIN","Initiale", "M2"));
     list_education.add( new Education ("MIAGE_STIN","Alternance", "M2"));
-    list_education.add( new Education ("IASD","Initiale", "M2"));
+    list_education.add( new Education ("IASD","Initiale", "M2")); 
     list_education.add( new Education ("IASD","Alternance", "M2")); 
 
     for (Education education : list_education){
@@ -147,14 +144,16 @@ public class List {
     
     public static void main(String args[]){
         get_list_education(); 
-        //System.out.println(list_education);
         get_list_student();
-        //System.out.println(student_list); 
+        
         get_lecture_education();
         Set<Lecture> keys = lecture_education.keySet();
+        ArrayList<Lecture> arrayList = new ArrayList<>(keys);
+        list_lecture = arrayList ; 
         for (Lecture key : keys) {
             key.lecture_student_list();  
         } 
+
     }
 
 

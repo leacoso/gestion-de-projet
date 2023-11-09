@@ -9,7 +9,7 @@ public class Project {
     private String explication ; 
     private int nombre_de_groupes = 0 ; 
     private static int nb_id = 1 ;  
-    public static HashMap<Project, ArrayList<Pair> > list_project_pair ; 
+    public static HashMap<Project, ArrayList<Pair> > list_project_pair = new HashMap<>(); 
     
     public Project(Lecture matiere, String sujet, MyDate myDate, String explication){
         id = nb_id ; 
@@ -20,6 +20,7 @@ public class Project {
         deadline = myDate;
         nombre_de_groupes = 0;
         add_project(); 
+    
     }
 
     public Project(){
@@ -33,7 +34,7 @@ public class Project {
     }
 
     public void add_project(){
-        list_project_pair.put(this, new ArrayList<Pair>); 
+        list_project_pair.put(this, new ArrayList<>()); 
     }
 
     public static void add_pair_to_project(Project project, Pair p){

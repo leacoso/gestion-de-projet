@@ -5,14 +5,14 @@ import java.util.Map;
 
 public class Teacher extends Person {
     private static  Map<String, String> user_password = new HashMap<>();
-    private static Map<String, ArrayList<String>> user_subject = new HashMap<>(); 
+    private static Map<String, ArrayList<Lecture>> user_subject = new HashMap<>(); 
     private static Map<String, Teacher> user_teacher = new HashMap<>();
 
     public Teacher(String name, String p){
         super(name,p); 
     }
 
-    public Teacher(String name, String p, String user, String pass, ArrayList<String> matieres){
+    public Teacher(String name, String p, String user, String pass, ArrayList<Lecture> matieres){
         this(name,p); 
         user_password.put(user, pass); 
         user_subject.put(user,matieres); 
@@ -39,11 +39,19 @@ public class Teacher extends Person {
         return null ; 
     }
 
-    public static ArrayList<String> get_subject(String user){
+    public static ArrayList<Lecture> get_subject(String user){
         if (user_subject.containsKey(user)) {
             return user_subject.get(user); 
         } 
         return null ; 
+    }
+
+    public static ArrayList<String> lecture_to_string(ArrayList<Lecture> sub){
+        ArrayList<String> list = new ArrayList<>(); 
+        for (Lecture lecture : sub){
+            list.add(lecture.toString()); 
+        }
+        return list; 
     }
 
     public static Teacher get_teacher(String user){
@@ -52,7 +60,7 @@ public class Teacher extends Person {
         } 
         return null ; 
     }
-    public static void ajout_user_subject(String user, ArrayList<String> sub){user_subject.put(user, sub); }
+    public static void ajout_user_subject(String user, ArrayList<Lecture> sub){user_subject.put(user, sub); }
     public static void ajout_user_teacher(String user, Teacher t){user_teacher.put(user, t); }
 
 }

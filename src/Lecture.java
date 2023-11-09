@@ -5,6 +5,7 @@ public class Lecture {
     private String name ; 
     private String grade ; 
     public ArrayList<Student> lecture_student = new ArrayList<>(); 
+    public ArrayList<Project> lecture_project = new ArrayList<>(); 
 
     public Lecture(String n){
         name_grade(n);
@@ -26,7 +27,7 @@ public class Lecture {
     }
 
     public String toString(){
-        return name + " "  + grade ; 
+        return name + " , "  + grade ; 
     }
     
     public void lecture_student_list(){
@@ -34,6 +35,12 @@ public class Lecture {
         for (Education ed : educations ){
             lecture_student.addAll(List.list_education_student.get(ed)); 
         }
+    }
+
+    public void add_project(Project p){
+        lecture_project.add(p); 
+
+
     }
    
 

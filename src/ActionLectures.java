@@ -2,6 +2,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import java.awt.Component;
+import java.awt.Container;
 
 public class ActionLectures implements ActionListener {
     public Lecture lecture ; 
@@ -23,9 +25,11 @@ public class ActionLectures implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        Menu.refresh(frame);
+        Menu.refresh(frame,0);
         String action = e.getActionCommand(); 
+        System.out.println(action); 
         String[] list = action.split(",");
+        System.out.println(list);
         Lecture lecture = find_Lecture(list[0].trim(), list[1].trim());
 
         JButton generate_student_list = new JButton("Generate the student list");
