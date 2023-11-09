@@ -20,7 +20,7 @@ public class Parametre implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Menu.refresh(frame);
+        Menu.refresh(frame,0);
         switch (action) {
 
             case "Deconnexion": 
