@@ -59,7 +59,6 @@ public class ActionProjects implements ActionListener{
     }
 
     public void create_project() {
-        Menu.refresh(frame,4); 
         JLabel nameproject = new JLabel("Project Name");
         nameproject.setBounds(100, 200, 150, 25);
         frame.add(nameproject);
@@ -111,42 +110,32 @@ public class ActionProjects implements ActionListener{
             String explication = ((JTextField)(contentPane.getComponent(9))).getText();
             Project pro = new Project(lecture, subject, new MyDate(deadline), explication); 
             lecture.add_project(pro);
+            Menu.refresh(frame, 4);
+            
             String t = " Your project  has been successfully created \n"  + pro.toString() + "\n If you want to add pairs, go to 'My projects', select your project and add yours pairs there ";   
             JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
             texte.setLayout(null);
             texte.setBounds(300, 400, 1000, 100);
             
             texte.setVisible(true);
-            frame.revalidate(); 
-            frame.repaint();
-            frame.add(texte);
-            Menu.refresh(frame, 4); 
-            /* 
-            for (int i = 4; i<= 10 ; i++){
-                frame.remove(components[i]);  
-            }*/
+            frame.add(texte); 
             frame.revalidate();
             frame.repaint();
             JButton OK = new JButton("OK");
-            
+
             OK.setBounds(300, 600, 150, 25);
             frame.add(OK); 
             OK.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e){
-                    
-                    Container contentPane = frame.getContentPane(); 
-                    Component[] components = contentPane.getComponents(); 
+                public void actionPerformed(ActionEvent e){ 
                     Menu.refresh(frame, 4); 
-                    /*frame.remove(components[4]);
-                    frame.remove(components[5]);
-                    frame.revalidate(); 
-                    frame.repaint();*/
+                    
                 }
             });
             }
     });
 }
+
     
     public void remove_project(){
         
