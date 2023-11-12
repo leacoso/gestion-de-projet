@@ -1,18 +1,33 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
 
 public class ActionLectures implements ActionListener {
     public Lecture lecture ; 
     public JFrame frame ; 
     public String action ; 
+    public int case_action ; 
 
-    public ActionLectures(JFrame frame, String action){
+    public ActionLectures(JFrame frame, String action, int case_a){
         this.frame = frame; 
         this.action = action ; 
+        case_action = case_a ; 
     }
 
     public Lecture find_Lecture(String name1, String niveau1){
@@ -23,42 +38,100 @@ public class ActionLectures implements ActionListener {
         } 
         return null; 
     }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         Menu.refresh(frame,0);
         String action = e.getActionCommand(); 
-        System.out.println(action); 
         String[] list = action.split(",");
-        System.out.println(list);
         Lecture lecture = find_Lecture(list[0].trim(), list[1].trim());
 
-        JButton generate_student_list = new JButton("Generate the student list");
-        generate_student_list.setBounds(100, 40, 200, 25);
-        frame.add(generate_student_list);
+        switch(case_action){
+            case 1 : 
+            
+            Menu.refresh_menu(frame); 
 
-        JButton add_project = new JButton("Add a new project");
-        add_project.setBounds(300, 40, 150, 25);
-        frame.add(add_project);
+            JMenuBar menubar = frame.getJMenuBar();
 
-        JButton remove_project = new JButton("Remove a project");
-        remove_project.setBounds(500, 40, 150, 25);
-        frame.add(remove_project);
+            JMenu current_lecture = new JMenu(action); 
+            menubar.add(current_lecture); 
 
-        JButton check_project = new JButton("My projects");
-        check_project.setBounds(700, 40, 150, 25);
-        frame.add(check_project);
+            JMenuItem add_project = new JMenuItem("Add a new project");
+            current_lecture.add(add_project);
 
-        frame.revalidate();
-        frame.repaint();
-        generate_student_list.setVisible(true);
-        add_project.setVisible(true);
-        remove_project.setVisible(true);
-        check_project.setVisible(true);
-        //generate_student_list.addActionListener(new ActionList("Generate the student list", frame,lecture));
-        add_project.addActionListener(new ActionProjects("Add a new project", frame, lecture));
-        remove_project.addActionListener(new ActionProjects("Remove a project", frame, lecture));
-        check_project.addActionListener(new ActionProjects("My projects", frame, lecture));
-          
+            JMenuItem generate_student_list = new JMenuItem("Generate the students list");
+            current_lecture.add(generate_student_list);
+
+            JMenuItem check_project = new JMenuItem("My projects");
+            current_lecture.add(check_project);
+
+            generate_student_list.addActionListener(new ActionLectures(frame,action ,2));
+            add_project.addActionListener(new ActionProjects("Add a new project", frame, lecture));
+            check_project.addActionListener(new ActionProjects("My projects", frame, lecture));
+            frame.revalidate();
+            frame.repaint();
+            break; 
+
+            case 2 : 
+            //Generate the student list 
+             
+            affiche_students(); 
+            
+            break; 
+            
+
+
+
         }
+
+
+    }
+
+    public void affiche_students(){
+
+        ArrayList<Student> students = lecture.lecture_student ;
+        Table_student model = new Table_student(students);
+        JTable table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        JButton modifyButton = new JButton("Modify");
+        modifyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Student selectedProject = students.get(selectedRow);
+                }
+            }
+        });
+
+        JButton backButton = new JButton("back to menu");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu.refresh(frame,0);
+                Container contentPane = frame.getContentPane(); 
+                Component[] components = contentPane.getComponents(); 
+                for (Component co : components){co.setVisible(true);}
+            }
+        });
+
+            Container contentPane = frame.getContentPane(); 
+            Component[] components = contentPane.getComponents(); 
+            for (Component co : components){co.setVisible(false);}
+            frame.setLayout(new BorderLayout());
+            Box buttonBox = Box.createHorizontalBox();
+            buttonBox.add(modifyButton);
+            buttonBox.add(Box.createHorizontalStrut(10)); 
+            buttonBox.add(backButton);
+            frame.add(scrollPane, BorderLayout.CENTER);
+            frame.add(buttonBox, BorderLayout.SOUTH);
+
+            frame.revalidate();
+            frame.repaint();
+
+
+    }
 }
   

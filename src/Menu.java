@@ -5,8 +5,6 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class Menu {
@@ -76,7 +74,7 @@ public class Menu {
         for (String sub : subjects){
             JMenuItem cours = new JMenuItem(sub); 
             mes_cours.add(cours);
-            cours.addActionListener(new ActionLectures(frame,sub)); 
+            cours.addActionListener(new ActionLectures(frame,sub, 1)); 
         }
 
         JMenu parametre = new JMenu(" PARAMETRE"); 
@@ -102,7 +100,18 @@ public class Menu {
         frame.revalidate();
         frame.repaint();
         }
+    public static void refresh_menu(JFrame frame){
 
+        JMenuBar menubar = frame.getJMenuBar();        
+            if (menubar != null) {
+                int size = menubar.getMenuCount();
+                if (size > 2){menubar.remove(size - 1);}
+                frame.revalidate(); 
+                frame.repaint(); 
+            }
+        }
+
+    
 
 
         public static void main(String[] args) {

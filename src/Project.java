@@ -85,6 +85,8 @@ public class Project {
         return " ID :  " + String.valueOf(id) + " \n  Subject : "   +  sujet + "\n deadline  : " + deadline.toString(); 
     }
 
-   
+   public String get_title(){
+    return id + " , " + sujet ; 
+   }
 
 }

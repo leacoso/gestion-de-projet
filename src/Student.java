@@ -1,4 +1,12 @@
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 public class Student extends Person {
     private int student_number ;  
@@ -22,10 +30,6 @@ public class Student extends Person {
     public Education getEducation() {return education;}
     public void setProjects(List<Project> projects) {this.projects = projects;}
     public List<Project> getProjects() {return projects;}
-    
 
-    
-
-    
 
 }

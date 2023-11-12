@@ -1,17 +1,17 @@
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 public class ActionProjects implements ActionListener{
     public JFrame frame ; 
@@ -28,31 +28,29 @@ public class ActionProjects implements ActionListener{
     public void actionPerformed(ActionEvent e){
         
         switch (action) {
-            //case "Generate the student list" :
+            
             case "Add a new project":
-            Menu.refresh(frame,4); 
+            Menu.refresh(frame,0); 
             create_project(); 
             break ; 
 
-            case "Remove a project":
-            Menu.refresh(frame,4); 
-            remove_project();
-            break; 
-             
-
             case "My projects":
-            Menu.refresh(frame,4); 
+            Menu.refresh(frame,0); 
             my_projects();
             break; 
 
             case "Grade students" :
-            
-
             break ;  
 
             case "Check all my projects" :
             check_all_projects();  
             break ; 
+
+            case "Generate the students list" :
+            check_all_projects();  
+            break ; 
+
+
 
          
         }
@@ -74,7 +72,6 @@ public class ActionProjects implements ActionListener{
         JTextField nameproject_text = new JTextField(20);
         nameproject_text.setBounds(300, 200, 300, 25);
         frame.add(nameproject_text);
-
 
         JTextField deadline_text = new JTextField(20);
         deadline_text.setBounds(300, 230, 300, 25);
@@ -105,12 +102,12 @@ public class ActionProjects implements ActionListener{
             public void actionPerformed(ActionEvent e){
             Container contentPane = frame.getContentPane(); 
             Component[] components = contentPane.getComponents(); 
-            String subject = ((JTextField)(contentPane.getComponent(7))).getText();
-            String deadline = ((JTextField)(contentPane.getComponent(8))).getText();
-            String explication = ((JTextField)(contentPane.getComponent(9))).getText();
+            String subject = ((JTextField)(contentPane.getComponent(3))).getText();
+            String deadline = ((JTextField)(contentPane.getComponent(4))).getText();
+            String explication = ((JTextField)(contentPane.getComponent(5))).getText();
             Project pro = new Project(lecture, subject, new MyDate(deadline), explication); 
             lecture.add_project(pro);
-            Menu.refresh(frame, 4);
+            Menu.refresh(frame, 0);
             
             String t = " Your project  has been successfully created \n"  + pro.toString() + "\n If you want to add pairs, go to 'My projects', select your project and add yours pairs there ";   
             JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
@@ -128,7 +125,7 @@ public class ActionProjects implements ActionListener{
             OK.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){ 
-                    Menu.refresh(frame, 4); 
+                    Menu.refresh(frame, 0); 
                     
                 }
             });
@@ -136,7 +133,6 @@ public class ActionProjects implements ActionListener{
     });
 }
 
-    
     public void remove_project(){
         
     }
@@ -144,12 +140,12 @@ public class ActionProjects implements ActionListener{
     public void my_projects(){ 
 
         JButton grade_students = new JButton("Grade students"); 
-        grade_students.setBounds(100, 250, 150, 25);
+        grade_students.setBounds(700, 70, 200, 25) ; 
         frame.add(grade_students);
         grade_students.addActionListener(new ActionProjects("Grade students", frame, lecture));
-
+        
         JButton check = new JButton("Check all my projects"); 
-        check.setBounds(100, 280, 200, 25);
+        check.setBounds(700, 100, 200, 25) ; 
         frame.add(check);
         grade_students.setVisible(true);
         check.setVisible(true);
@@ -161,7 +157,7 @@ public class ActionProjects implements ActionListener{
     }
 
     public void check_all_projects(){
-        int i = 250 ; 
+       
         ArrayList<Project> projects = lecture.lecture_project; 
         if (projects.size() == 0) { 
             JLabel project_null = new JLabel("You don't have any project ! "); 
@@ -169,7 +165,7 @@ public class ActionProjects implements ActionListener{
             frame.add(project_null); 
             project_null.setVisible(true);
             JButton OK = new JButton("OK");
-            OK.setBounds(300, 600, 150, 25);
+            OK.setBounds(300, 230, 150, 25);
             frame.add(OK); 
             frame.revalidate(); 
             frame.repaint();
@@ -178,7 +174,6 @@ public class ActionProjects implements ActionListener{
                 public void actionPerformed(ActionEvent e){
                     Container contentPane = frame.getContentPane(); 
                     Component[] components = contentPane.getComponents(); 
-                    //for (int i = 0 ;i<components.length ; i++){System.out.println(components[i].getClass()); }
                     frame.remove(components[components.length -2]); 
                     frame.remove(components[components.length -1]); 
                     frame.revalidate();
@@ -187,20 +182,69 @@ public class ActionProjects implements ActionListener{
             });
         }
         else {
-            for (Project project : projects){
-            JButton projet_label = new JButton(project.toString()); 
-            projet_label.setBounds(100, i, 300, 100);
-            i+=20 ; 
-            frame.add(projet_label);
-            projet_label.setVisible(true);
+            Menu.refresh(frame,0);
+            affiche_projects(frame, lecture); 
+    }
+             
+    }
+
+    public void affiche_projects(JFrame frame, Lecture lecture){
+
+        ArrayList<Project> projects2 = lecture.lecture_project ; 
+        Table_project model = new Table_project(projects2);
+        JTable table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        JButton modifyButton = new JButton("Modify");
+        modifyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Project selectedProject = projects2.get(selectedRow);
+                }
             }
-        }
-        frame.revalidate();
-        frame.repaint(); 
+        });
+
+        JButton backButton = new JButton("back to menu");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu.refresh(frame,0);
+                Container contentPane = frame.getContentPane(); 
+                Component[] components = contentPane.getComponents(); 
+                for (Component co : components){co.setVisible(true);}
+            }
+        });
+
+            Container contentPane = frame.getContentPane(); 
+            Component[] components = contentPane.getComponents(); 
+            for (Component co : components){co.setVisible(false);}
+            frame.setLayout(new BorderLayout());
+            Box buttonBox = Box.createHorizontalBox();
+            buttonBox.add(modifyButton);
+            buttonBox.add(Box.createHorizontalStrut(10)); 
+            buttonBox.add(backButton);
+            frame.add(scrollPane, BorderLayout.CENTER);
+            frame.add(buttonBox, BorderLayout.SOUTH);
+
+            frame.revalidate();
+            frame.repaint();
+
     }
 
 
-}
+
+          
+          
+
+        
+    }
+    
+       
+
+
 
 
     
