@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 public class Student extends Person {
-    private int student_number ;  
+    private long student_number ;  
     private Education education ; 
     private List<Project> projects;
  
@@ -17,7 +17,7 @@ public class Student extends Person {
         super(pe, nom); 
     }
 
-    public Student(String firstname, String lastname, int student_number, Education education,  List<Project> projects){
+    public Student(String firstname, String lastname, long student_number, Education education,  List<Project> projects){
         super(firstname, lastname); 
         this.education = education; 
         this.student_number = student_number ;  

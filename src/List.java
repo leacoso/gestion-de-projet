@@ -68,24 +68,20 @@ public class List {
         "Da Silva", "Besson", "Guyot", "Schmitt", "Guichard", "Tessier", "Hervé", "Blin", "Vincent", "Moreau",
         "Legendre", "Laroche", "Le Gall", "Perrier", "Le Roux", "Renault"} ;
         
-        int begin = 223513 ; 
+        long begin = 223513 ; 
         for (int i = 0 ; i<  firstname_list.length; i++){
-         
-            int etu = Integer.parseInt(String.valueOf(begin) + String.valueOf(i));
-            
-            Random random = new Random(); 
-            int formation = random.nextInt(18); 
-            Student student = new Student(firstname_list[i], lastname_list[i], etu, list_education.get(formation), null);
-            student_list.add(student) ;
-            
-            if (list_education_student.get(list_education.get(formation)).isEmpty()){  
-                list_education_student.get(list_education.get(formation)).add(student) ; 
-            }  
+            for (int j = 0 ; j< (lastname_list.length)/5 ; j++){
+                long etu =  (long) begin  + j ; 
+                Random random = new Random(); 
+                int formation = random.nextInt(18); 
+                Student student = new Student(firstname_list[i], lastname_list[j], etu, list_education.get(formation), null);
+                student_list.add(student) ;
+                list_education_student.get(list_education.get(formation)).add(student); 
+            }   
         }
     }
-    
-    public static ArrayList<Education> get_array_ed( int[] elements){
 
+    public static ArrayList<Education> get_array_ed( int[] elements){
         ArrayList<Education> list = new ArrayList<>(); 
         for (int i : elements){
             list.add(list_education.get(i)); 
@@ -137,8 +133,7 @@ public class List {
         lecture_education.put(new Lecture("data Mining, M2"), get_array_ed(new int[] {11})); // M2 MIAGE ID I
 
         lecture_education.put(new Lecture("data science, M2"), get_array_ed(new int[] {14, 15})); // M2 STIN Alt et I
-        lecture_education.put(new Lecture("SQL, NoSQL, M2"), get_array_ed(new int[] {14, 15})); // M2 STIN Alt et I
-
+        lecture_education.put(new Lecture("SQL-NoSQL, M2"), get_array_ed(new int[] {14, 15})); // M2 STIN Alt et I
     }
   
     
