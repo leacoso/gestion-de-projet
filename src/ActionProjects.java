@@ -4,6 +4,12 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,6 +67,60 @@ public class ActionProjects implements ActionListener{
          
         }
     }
+
+    public void different_grades(Project p,HashMap<Project, ArrayList<Pair>> list_project_pair){
+        // Création d'un tableau pour stocker les notes pour obtenir la meilleure, la pire,
+        // la moyenne et la médiane
+
+        ArrayList<Double> dif_grades = new ArrayList<>();
+
+        //pour chaque binome de la liste des binomes du Projet p
+        for (ArrayList<Pair> pairs : list_project_pair.values()) {
+            for (Pair pair : pairs) {
+                System.out.println(pair.getGrade());
+                dif_grades.add(pair.getGrade());
+            }
+        }
+
+        // Trier dans l'odre croissant les notes
+        Collections.sort(dif_grades);
+
+        // Pire note
+        System.out.println(dif_grades.get(0));
+
+        // Meilleure note
+        int lastIndex = dif_grades.size() - 1;
+        System.out.println(dif_grades.get(lastIndex));
+
+        // Moyenne
+        double sum = 0.0;
+        for (double grade : dif_grades) {
+            sum += grade;
+        }
+
+        double average = sum / dif_grades.size();
+        System.out.println("Moyenne des notes : " + average);
+
+        // Médiane
+         double median;
+         int size = dif_grades.size();
+ 
+         if (size % 2 == 0) {
+             // Si la taille de la liste est paire, la médiane est la moyenne des deux valeurs du milieu
+             int middleIndex1 = size / 2 - 1;
+             int middleIndex2 = size / 2;
+             median = (dif_grades.get(middleIndex1) + dif_grades.get(middleIndex2)) / 2.0;
+         } else {
+             // Si la taille de la liste est impaire, la médiane est la valeur du milieu
+             int middleIndex = size / 2;
+             median = dif_grades.get(middleIndex);
+         }
+ 
+         // Affichage de la médiane
+         System.out.println("Médiane : " + median);
+     }
+
+    
 
     public void create_project() {
         JLabel nameproject = new JLabel("Project Name");
@@ -143,6 +203,7 @@ public class ActionProjects implements ActionListener{
         }
 
     
+            
 
     public void my_projects(){ 
 
