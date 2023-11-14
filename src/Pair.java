@@ -3,6 +3,12 @@ public class Pair {
     private Student student1 ; 
     private Student student2 ; 
     private MyDate due_date ; 
+    private double grade;
+    
+    public double getGrade() {
+        return grade;
+    }
+
     private int id ; 
 
     public Pair(Project project, Student student1, Student student2, MyDate due_date ){
