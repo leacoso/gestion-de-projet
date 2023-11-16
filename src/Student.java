@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+
 public class Student extends Person {
     private long student_number ;  
     private Education education ; 
@@ -23,7 +24,21 @@ public class Student extends Person {
         this.student_number = student_number ;  
         this.projects = projects ; 
     }
-    
+
+    public String toString2(){
+        return  firstname + " " + lastname ;  
+    }
+
+    public static Student get_student(long id){
+        ArrayList<Student> list = General_List.student_list ; 
+        int id_int = (int) id - 223513 ; 
+        return list.get(id_int) ; 
+        
+         
+    }
+   
+
+
     public void set_formation (Education f){education = f; }
     public String toString() {return firstname + " " + lastname + " " + student_number + " " + education.toString();}
     public double getStudent_number() {return student_number;}

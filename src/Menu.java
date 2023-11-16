@@ -100,6 +100,7 @@ public class Menu {
         frame.revalidate();
         frame.repaint();
         }
+   
     public static void refresh_menu(JFrame frame){
 
         JMenuBar menubar = frame.getJMenuBar();        
@@ -110,28 +111,20 @@ public class Menu {
                 frame.repaint(); 
             }
         }
-
-    
-
-
         public static void main(String[] args) {
         JFrame frame = new JFrame("Menu");
         frame.setVisible(true);
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        List.get_list_education(); 
-        //System.out.println(list_education);
-        List.get_list_student();
-        //System.out.println(student_list); 
-        List.get_lecture_education();
-        Set<Lecture> keys = List.lecture_education.keySet(); // Liste de tous les cours 
+        General_List.get_list_education(); 
+        General_List.get_list_student();
+        General_List.get_lecture_education();
+        Set<Lecture> keys = General_List.lecture_education.keySet(); // Liste de tous les cours 
         for (Lecture key : keys) {
             key.lecture_student_list();  
         } 
         ArrayList<Lecture> lectures = new ArrayList<>(keys);
-        List.list_lecture = lectures; 
-
-         
+        General_List.list_lecture = lectures; 
         ArrayList<Lecture> listp = new ArrayList<>(); 
         listp.add(lectures.get(0)); 
         listp.add(lectures.get(5)); 

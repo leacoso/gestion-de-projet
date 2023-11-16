@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Lecture {
@@ -8,7 +9,14 @@ public class Lecture {
     public ArrayList<Project> lecture_project = new ArrayList<>(); 
 
     public Lecture(String n){
-        name_grade(n);
+        if (n.length() == 0  || n == null){
+            name = null ;
+            grade = null ; 
+        }
+        else {
+             name_grade(n);
+        }
+       
     }
 
     public void name_grade(String n){
@@ -31,14 +39,15 @@ public class Lecture {
     }
     
     public void lecture_student_list(){
-        ArrayList<Education> educations = List.lecture_education.get(this); 
+        ArrayList<Education> educations = General_List.lecture_education.get(this); 
         for (Education ed : educations ){
-            lecture_student.addAll(List.list_education_student.get(ed)); 
+            lecture_student.addAll(General_List.list_education_student.get(ed)); 
         }
     }
 
     public void add_project(Project p){
-        lecture_project.add(p); 
+        lecture_project.add(p);
+         
 
 
     }

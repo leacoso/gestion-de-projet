@@ -3,7 +3,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
-public class List {
+public class General_List {
+
     public static ArrayList<Student> student_list = new ArrayList<>();  
     public static HashMap<Lecture,ArrayList<Education>> lecture_education = new HashMap<>();  
     public static ArrayList<Lecture> list_lecture = new ArrayList<>(); 
@@ -135,7 +136,8 @@ public class List {
         lecture_education.put(new Lecture("data science, M2"), get_array_ed(new int[] {14, 15})); // M2 STIN Alt et I
         lecture_education.put(new Lecture("SQL-NoSQL, M2"), get_array_ed(new int[] {14, 15})); // M2 STIN Alt et I
     }
-  
+    
+
     
     public static void main(String args[]){
         get_list_education(); 
@@ -148,6 +150,8 @@ public class List {
         for (Lecture key : keys) {
             key.lecture_student_list();  
         } 
+
+        System.out.println(student_list); 
 
     }
 

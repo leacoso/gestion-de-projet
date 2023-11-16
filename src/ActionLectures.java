@@ -28,7 +28,7 @@ public class ActionLectures implements ActionListener {
     }
 
     public Lecture find_Lecture(String name1, String niveau1){
-        for (Lecture lecture : List.list_lecture){
+        for (Lecture lecture : General_List.list_lecture){
             if ((lecture.get_name().equalsIgnoreCase(name1)) && (lecture.get_grade().equalsIgnoreCase(niveau1))){
                 this.lecture = lecture ; 
                 return lecture ; 
@@ -65,42 +65,28 @@ public class ActionLectures implements ActionListener {
 
             case 2 : 
             //Generate the student list 
-            affiche_students(); 
+            print_students(); 
             break; 
             
-
-
 
         }
 
 
     }
 
-    public void affiche_students(){
+    public void print_students(){
         ArrayList<Student> students = lecture.lecture_student ;
         Table_student model = new Table_student(students);
         JTable table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(table);
         
-        JButton modifyButton = new JButton("Modify");
-        modifyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow >= 0) {
-                    Student selectedProject = students.get(selectedRow);
-                }
-            }
-        });
-        JButton backButton = new JButton("back to menu");
-        backButton.addActionListener(new ActionListener() {
+        JButton back = new JButton("back to menu");
+        back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Menu.refresh(frame,0);
-                Container contentPane = frame.getContentPane(); 
-                Component[] components = contentPane.getComponents(); 
-                for (Component co : components){co.setVisible(true);}
+                frame.setLayout(null);
             }
         });
 
@@ -109,12 +95,10 @@ public class ActionLectures implements ActionListener {
             for (Component co : components){co.setVisible(false);}
             frame.setLayout(new BorderLayout());
             Box buttonBox = Box.createHorizontalBox();
-            buttonBox.add(modifyButton);
             buttonBox.add(Box.createHorizontalStrut(10)); 
-            buttonBox.add(backButton);
+            buttonBox.add(back);
             frame.add(scrollPane, BorderLayout.CENTER);
             frame.add(buttonBox, BorderLayout.SOUTH);
-
             frame.revalidate();
             frame.repaint();
 

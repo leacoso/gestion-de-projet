@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-class Table_project extends AbstractTableModel {
+public class Table_project extends AbstractTableModel {
     private final ArrayList<Project> projects;
     private final String[] columnNames = {"ID", "subject", "deadline"}; 
 

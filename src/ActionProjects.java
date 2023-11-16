@@ -1,56 +1,56 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+
 
 public class ActionProjects implements ActionListener{
     public JFrame frame ; 
     public String action ; 
     public Lecture lecture ;
- 
+
     public ActionProjects(String action, JFrame frame, Lecture lecture){
         this.frame = frame ; 
         this.action = action; 
         this.lecture = lecture ; 
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e){
         
         switch (action) {
             
             case "Add a new project":
+        
             Menu.refresh(frame,0); 
             create_project(); 
             break ; 
 
             case "My projects":
+
             Menu.refresh(frame,0); 
-            my_projects();
+            check_all_projects(); 
             break; 
-
-            case "Grade students" :
-            break ;  
-
-            case "Check all my projects" :
-            check_all_projects();  
-            break ; 
+ 
 
             case "Generate the students list" :
             check_all_projects();  
@@ -59,86 +59,13 @@ public class ActionProjects implements ActionListener{
             case "create2 my project": 
             create2_project();
             break;
-            
-            
-
-
-
-         
         }
     }
 
-    public void different_grades(Project p,HashMap<Project, ArrayList<Pair>> list_project_pair,int choice){
-        // Création d'un tableau pour stocker les notes pour obtenir la meilleure, la pire,
-        // la moyenne et la médiane
-
-        ArrayList<Double> dif_grades = new ArrayList<>();
-
-        //pour chaque binome de la liste des binomes du Projet p
-        for (ArrayList<Pair> pairs : list_project_pair.values()) {
-            for (Pair pair : pairs) {
-                System.out.println(pair.getGrade());
-                dif_grades.add(pair.getGrade());
-            }
-        }
-
-        // Trier dans l'odre croissant les notes
-        Collections.sort(dif_grades);
-
-        switch (choice) {
-            case 1:
-            // Pire note
-            System.out.println(dif_grades.get(0));
-                break;
-        
-            case 2:
-            // Meilleure note
-            int lastIndex = dif_grades.size() - 1;
-            System.out.println(dif_grades.get(lastIndex));
-            break;
-            
-            case 3:
-            // Moyenne
-            double sum = 0.0;
-            for (double grade : dif_grades) {
-                sum += grade;
-            }
-    
-            double average = sum / dif_grades.size();
-            System.out.println("Moyenne des notes : " + average);
-                break;
-            
-            case 4:
-            // Médiane
-             double median;
-             int size = dif_grades.size();
-     
-             if (size % 2 == 0) {
-                 // Si la taille de la liste est paire, la médiane est la moyenne des deux valeurs du milieu
-                 int middleIndex1 = size / 2 - 1;
-                 int middleIndex2 = size / 2;
-                 median = (dif_grades.get(middleIndex1) + dif_grades.get(middleIndex2)) / 2.0;
-             } else {
-                 // Si la taille de la liste est impaire, la médiane est la valeur du milieu
-                 int middleIndex = size / 2;
-                 median = dif_grades.get(middleIndex);
-             }
-     
-             // Affichage de la médiane
-             System.out.println("Médiane : " + median);
-                break;
-
-            default:
-                break;
-        }
-
-
-
-     }
-
-    
-
     public void create_project() {
+        Menu.refresh(frame, 0);
+        frame.setLayout(null);
+
         JLabel nameproject = new JLabel("Project Name");
         nameproject.setBounds(100, 200, 150, 25);
         frame.add(nameproject);
@@ -167,8 +94,11 @@ public class ActionProjects implements ActionListener{
         create_project.setBounds(300, 400, 150, 25);
         frame.add(create_project);
 
-        frame.revalidate();
-        frame.repaint();
+        JLabel error = new JLabel(" Your format is wrong, retry"); 
+        error.setBounds(300, 100, 300, 25);
+        frame.add(error);
+
+        error.setVisible(false);
         explication.setVisible(true);
         explication_text.setVisible(true);
         nameproject.setVisible(true);
@@ -181,69 +111,207 @@ public class ActionProjects implements ActionListener{
         create_project.addActionListener(new ActionProjects("create2 my project", frame, lecture));
 }
 
-    public void remove_project(){
-        
+    public void remove_project(Project project){
+        Project.get_list_project_pair().remove(project) ; 
+        lecture.lecture_project.remove(project) ;
+        affiche_projects(frame, lecture);
     }
 
     public void create2_project(){
-       
-        Container contentPane = frame.getContentPane(); 
-        Component[] components = contentPane.getComponents(); 
-        //while (((JTextField)(contentPane.getComponent(3))).getText().isEmpty())
-        String subject = ((JTextField)(contentPane.getComponent(3))).getText();
-        String deadline = ((JTextField)(contentPane.getComponent(4))).getText();
-        String explication = ((JTextField)(contentPane.getComponent(5))).getText();
-        Project pro = new Project(lecture, subject, new MyDate(deadline), explication); 
-        lecture.add_project(pro);
-        Menu.refresh(frame, 0);
-        
-        String t = " Your project  has been successfully created \n"  + pro.toString() + "\n If you want to add pairs, go to 'My projects', select your project and add yours pairs there ";   
-        JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
-        texte.setLayout(null);
-        texte.setBounds(300, 400, 1000, 100);
-            
-        texte.setVisible(true);
-        frame.add(texte); 
-        frame.revalidate();
-        frame.repaint();
-        JButton OK = new JButton("OK");
 
-        OK.setBounds(300, 600, 150, 25);
-        frame.add(OK); 
-        OK.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){ 
-                    Menu.refresh(frame, 0); 
-                }
-            });
+        frame.setLayout(null);
+        Container contentPane = frame.getContentPane(); 
+        Component[] components = contentPane.getComponents();
+    
+        String subject = ((JTextField)(components[3])).getText();
+        String deadline = ((JTextField)(components[4])).getText();
+        String explication = ((JTextField)(components[5])).getText();
+    
+        if (! MyDate.verif_date(deadline)){
+
+            ((JLabel)(components[7])).setVisible(true); 
+            frame.revalidate();
+            frame.repaint();
+            create_project();
+        }
+        else {
+            ((JLabel)(components[7])).setVisible(false);
+            frame.revalidate();
+            frame.repaint();
+            Project pro = new Project(lecture, subject, new MyDate(deadline), explication); 
+            lecture.add_project(pro);
+            Menu.refresh(frame, 0);
+            String t = " Your project  has been successfully created \n"  + pro.toString() + "\n If you want to add pairs, go to 'My projects', select your project and add yours pairs there ";   
+            JLabel texte = new JLabel("<html>" + t.replace("\n", "<br/>") + "</html>");
+            texte.setLayout(null);
+            texte.setBounds(300, 400, 1000, 100);
+            texte.setVisible(true);
+            frame.add(texte); 
+            frame.revalidate();
+            frame.repaint();
+            JButton OK = new JButton("OK");
+
+            OK.setBounds(300, 600, 150, 25);
+            frame.add(OK); 
+            OK.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e){ 
+                        Menu.refresh(frame, 0); 
+                    }
+                });
+
+            }
+            
+    
         }
 
-    
-            
+    public void add_pairs(Project project){
+        Menu.refresh(frame, 0);
+        ArrayList<Pair> pairs = Project.get_list_project_pair().get(project) ;
+        ArrayList<Student> students = project.alone ;
+        
+        Table_pair model_pair = new Table_pair(pairs);
+        Table_student model_student = new Table_student(students);
+        JTable table_pair = new JTable(model_pair);
+        JTable table_student = new JTable(model_student);
+        
+        table_student.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table_student.getSelectionModel().setSelectionMode(2); 
+        JScrollPane scrollPaneStudent = new JScrollPane(table_student);
+        JScrollPane scrollPanePair = new JScrollPane(table_pair);
+        scrollPaneStudent.setPreferredSize(new Dimension(300, 150)); // Exemple de taille
+        scrollPanePair.setPreferredSize(new Dimension(300, 150));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPaneStudent, scrollPanePair);
+        splitPane.setDividerLocation(500); 
+        splitPane.setOneTouchExpandable(true); 
+        frame.setLayout(new BorderLayout());
 
-    public void my_projects(){ 
-
-        JButton grade_students = new JButton("Grade students"); 
-        grade_students.setBounds(700, 70, 200, 25) ; 
-        frame.add(grade_students);
-        grade_students.addActionListener(new ActionProjects("Grade students", frame, lecture));
-        grade_students.addActionListener(new ActionListener() {
+        
+        JButton back = new JButton("back to menu");
+        back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                different_grades(null, null, 1);
+                Menu.refresh(frame,0);
+                frame.setLayout(null);
             }
         });
-        
-        JButton check = new JButton("Check all my projects"); 
-        check.setBounds(700, 100, 200, 25) ; 
-        frame.add(check);
-        grade_students.setVisible(true);
-        check.setVisible(true);
-        frame.revalidate(); 
-        frame.repaint(); 
-        //Menu.refresh(frame, 6); 
-        check.addActionListener(new ActionProjects("Check all my projects", frame, lecture));
 
+        JButton button_add = new JButton("Add");
+        button_add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { 
+
+                //JLabel error = new JLabel("It's the same student, please retry to create a new Pair"); 
+                int selectedRow = table_student.getSelectedRow();
+                if (selectedRow >= 0) {
+                    if (Table_pair.getStudent(1) == null) {
+                        //STUDENT 1
+                        Table_pair.setStudent(1, students.get(selectedRow));
+                    }
+                    else {
+                        //STUDENT 2
+                        if (students.get(selectedRow).getStudent_number() == Table_pair.getStudent(1).getStudent_number() ){
+                            //error.setVisible(true);
+                            Table_pair.setStudent(1, null);
+                            //frame.add(error);
+
+
+                        }
+                        else {
+                            //error.setVisible(false);
+                            Table_pair.setStudent(2, students.get(selectedRow));
+                            Pair pair = new Pair(project, Table_pair.getStudent(1), Table_pair.getStudent(2), null) ;
+                            project.alone.remove( Table_pair.getStudent(1)) ; 
+                            project.alone.remove( Table_pair.getStudent(2)) ; 
+                            Table_pair.setStudent(1, null);
+                            Table_pair.setStudent(2, null);
+                            Project.get_list_project_pair().get(project).add(pair); 
+                            
+
+                        }
+                        add_pairs(project);
+                        
+                        
+                        
+                    }
+                }
+            }
+        });
+       
+ 
+        Box buttonBox = Box.createHorizontalBox();
+        buttonBox.add(button_add);
+        buttonBox.add(back);
+        buttonBox.add(Box.createHorizontalStrut(10)); 
+
+        //buttonBox.add(error); 
+
+        buttonBox.add(Box.createHorizontalStrut(10)); 
+        frame.setLayout(new BorderLayout());
+        //frame.pack(); 
+        frame.add(splitPane, BorderLayout.CENTER);
+        frame.add(buttonBox, BorderLayout.SOUTH);
+        frame.setVisible(true); 
+        
+    
+    }
+
+
+    public void manipulation_project(Project project,String action_project) {
+        switch (action_project) {
+            case "Check this project" :
+            project_features(project) ; 
+            break ; 
+
+            case "Grade students" : 
+            break ; 
+
+            case "Add Pairs" :
+            add_pairs(project); 
+            break ; 
+
+            case "Remove project" : 
+            int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this project?", "Confirmation", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) { remove_project(project);  } 
+            else {if (result == JOptionPane.CANCEL_OPTION) {affiche_projects(frame, lecture);}}
+            break ; 
+        }
+
+    }
+
+    public void project_features(Project project){
+        
+        Table_features model = new Table_features(project); 
+        JTable table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        JButton backButton = new JButton("back to menu");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu.refresh(frame,0);
+                frame.setLayout(null);
+                Container contentPane = frame.getContentPane(); 
+                Component[] components = contentPane.getComponents(); 
+                for (Component co : components){co.setVisible(true);}
+            }
+        });
+
+        Container contentPane = frame.getContentPane(); 
+        Component[] components = contentPane.getComponents(); 
+        for (Component co : components){co.setVisible(false);}
+        frame.setLayout(new BorderLayout());
+        Box buttonBox = Box.createHorizontalBox();
+        buttonBox.add(backButton);
+        buttonBox.add(Box.createHorizontalStrut(10)); 
+        buttonBox.add(backButton);
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(buttonBox, BorderLayout.SOUTH);
+        frame.revalidate();
+        frame.repaint();
+        
+        
     }
 
     public void check_all_projects(){
@@ -286,13 +354,54 @@ public class ActionProjects implements ActionListener{
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(table);
 
-        JButton modifyButton = new JButton("Modify");
-        modifyButton.addActionListener(new ActionListener() {
+        JButton check = new JButton("Check this project");
+        check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow >= 0) {
-                    Project selectedProject = projects2.get(selectedRow);
+                    Project project = projects2.get(selectedRow);
+                    manipulation_project(project,"Check this project"); 
+                }
+            }
+        });
+
+        JButton remove = new JButton ("Remove this project"); 
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Project project = projects2.get(selectedRow);
+                    manipulation_project(project,"Remove project"); 
+                }
+            }
+        });
+
+
+        JButton grade_student = new JButton ("Grade students"); 
+        grade_student.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Project project = projects2.get(selectedRow);
+                    manipulation_project(project,"Grade students"); 
+                }
+            }
+        });
+
+
+        JButton add_pairs = new JButton("Add Pairs");
+        add_pairs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Project project = projects2.get(selectedRow);
+                    System.out.println(project.toString()); 
+                    manipulation_project(project,"Add Pairs"); 
+
                 }
             }
         });
@@ -302,6 +411,7 @@ public class ActionProjects implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Menu.refresh(frame,0);
+                frame.setLayout(null);
                 Container contentPane = frame.getContentPane(); 
                 Component[] components = contentPane.getComponents(); 
                 for (Component co : components){co.setVisible(true);}
@@ -313,18 +423,20 @@ public class ActionProjects implements ActionListener{
             for (Component co : components){co.setVisible(false);}
             frame.setLayout(new BorderLayout());
             Box buttonBox = Box.createHorizontalBox();
-            buttonBox.add(modifyButton);
+            buttonBox.add(check);
+            buttonBox.add(add_pairs);
+            buttonBox.add(grade_student);
+            buttonBox.add(remove);
             buttonBox.add(Box.createHorizontalStrut(10)); 
             buttonBox.add(backButton);
             frame.add(scrollPane, BorderLayout.CENTER);
             frame.add(buttonBox, BorderLayout.SOUTH);
-
             frame.revalidate();
             frame.repaint();
 
     }
 
-
+    
 
           
           
