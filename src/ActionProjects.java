@@ -317,26 +317,10 @@ public class ActionProjects implements ActionListener{
        
         ArrayList<Project> projects = lecture.lecture_project; 
         if (projects.size() == 0) { 
-            JLabel project_null = new JLabel("You don't have any project ! "); 
-            project_null.setBounds(300, 100, 200, 200);
-            frame.add(project_null); 
-            project_null.setVisible(true);
-            JButton OK = new JButton("OK");
-            OK.setBounds(300, 230, 150, 25);
-            frame.add(OK); 
-            frame.revalidate(); 
-            frame.repaint();
-            OK.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    Container contentPane = frame.getContentPane(); 
-                    Component[] components = contentPane.getComponents(); 
-                    frame.remove(components[components.length -2]); 
-                    frame.remove(components[components.length -1]); 
-                    frame.revalidate();
-                    frame.repaint();
-                }
-            });
+            int result = JOptionPane.showConfirmDialog(frame, "You don't have any project !", null, JOptionPane.OK_OPTION);
+            if (result == JOptionPane.OK_OPTION){ 
+                Menu.refresh(frame, 0);
+            }      
         }
         else {
             Menu.refresh(frame,0);
@@ -452,7 +436,7 @@ public class ActionProjects implements ActionListener{
         frame.add(s2_grade);
 
         JLabel due_date = new JLabel("due_date");
-        due_date.setBounds(100, 280, 300, 25);
+        due_date.setBounds(100, 290, 300, 25);
         frame.add(due_date);
 
         JTextField oral_grade_text = new JTextField(20);

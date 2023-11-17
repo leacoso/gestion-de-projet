@@ -79,7 +79,7 @@ public class Pair {
         
         else {
             if (duDate.get_month() - deadline.get_month() > 1)  {return 0.0; }
-            if (duDate.get_month() - deadline.get_month()  == 0) {return Math.max(0.0,grade - (duDate.get_day() + deadline.get_day())/5);  } 
+            if (duDate.get_month() - deadline.get_month()  == 0) {return Math.max(0.0, grade - (duDate.get_day() - deadline.get_day())/5);  } 
             else {return Math.max(0.0, grade - (duDate.get_day() + 31- deadline.get_day())/5) ; }
             
         }
