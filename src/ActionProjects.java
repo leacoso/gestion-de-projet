@@ -451,6 +451,10 @@ public class ActionProjects implements ActionListener{
         s2_grade.setBounds(100, 260, 300, 25);
         frame.add(s2_grade);
 
+        JLabel due_date = new JLabel("due_date");
+        due_date.setBounds(100, 280, 300, 25);
+        frame.add(due_date);
+
         JTextField oral_grade_text = new JTextField(20);
         oral_grade_text.setBounds(400, 200, 300, 25);
         frame.add(oral_grade_text);
@@ -463,8 +467,12 @@ public class ActionProjects implements ActionListener{
         s2_grade_text.setBounds(400, 260, 300, 25);
         frame.add(s2_grade_text);
 
+        JTextField due_date_text = new JTextField(20);
+        due_date_text.setBounds(400, 290, 300, 25);
+        frame.add(due_date_text);
+
         JButton OK = new JButton("OK"); 
-        OK.setBounds(400, 290, 300, 25); 
+        OK.setBounds(400, 320, 300, 25); 
         frame.add(OK); 
 
         OK.addActionListener(new ActionListener() {
@@ -474,11 +482,14 @@ public class ActionProjects implements ActionListener{
 
                     Container contentPane = frame.getContentPane(); 
                     Component[] components = contentPane.getComponents(); 
-                    String oral_grade = ((JTextField)(components[3])).getText(); 
-                    String s1_grade = ((JTextField)(components[4])).getText(); 
-                    String s2_grade = ((JTextField)(components[5])).getText(); 
+                    String oral_grade = ((JTextField)(components[4])).getText(); 
+                    String s1_grade = ((JTextField)(components[5])).getText(); 
+                    String s2_grade = ((JTextField)(components[6])).getText(); 
+                    String due_date = ((JTextField)(components[7])).getText(); 
+                    
 
-                    if (Pair.verif_grade(oral_grade, s1_grade, s2_grade)){
+                    if (Pair.verif_grade(oral_grade, s1_grade, s2_grade) && MyDate.verif_date(due_date)){
+                        pair.setDueDate(new MyDate(due_date));
                         pair.setOralGrade(Double.parseDouble(oral_grade));
                         pair.setS1Grade(Double.parseDouble(s1_grade)); 
                         pair.setS2Grade(Double.parseDouble(s2_grade));
@@ -491,8 +502,7 @@ public class ActionProjects implements ActionListener{
                 
             }
     });
-                
-        
+            
         frame.revalidate();
         frame.repaint();
 

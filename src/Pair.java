@@ -49,7 +49,8 @@ public class Pair {
     }
 
     public void setOralGrade(double n){
-        oral_grade = n ; 
+        oral_grade = calcul_final_grade(n, project.getdeadline(), due_date) ; 
+         
 
     }
 
@@ -63,11 +64,27 @@ public class Pair {
 
     }
 
-    /*public double calcul_final_grade(double grade, MyDate deadline, MyDate duDate){
+    public void setDueDate(MyDate date){
+        due_date = date ; 
+    }
+    
+    public double calcul_final_grade(double grade, MyDate deadline, MyDate duDate){
+        //If the project has more than one month late then the grade will be 0. 
+        // one point is deducted for 5 days of delay
 
-
-
-    }*/
+        if (deadline.get_month() == 12){
+            if (duDate.get_month() > 1 || duDate.get_month() < 12){return 0.0 ; }
+            else {return Math.max(0.0,grade - ( 31- ( deadline.get_day() + (duDate.get_day()))) /5); }
+        }
+        
+        else {
+            if (duDate.get_month() - deadline.get_month() > 1)  {return 0.0; }
+            if (duDate.get_month() - deadline.get_month()  == 0) {return Math.max(0.0,grade - (duDate.get_day() + deadline.get_day())/5);  } 
+            else {return Math.max(0.0, grade - (duDate.get_day() + 31- deadline.get_day())/5) ; }
+            
+        }
+      
+    }
 
     public static boolean verif_grade(String g1, String g2, String g3){
         return g1.matches("[+-]?\\d*(\\.\\d+)?") && g2.matches("[+-]?\\d*(\\.\\d+)?") && g3.matches("[+-]?\\d*(\\.\\d+)?");
