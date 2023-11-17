@@ -3,8 +3,11 @@ public class Pair {
     private Student student1 ; 
     private Student student2 ; 
     private double oral_grade ; 
+    private double grade_s1 ;  
+    private double grade_s2 ; 
     private MyDate due_date ; 
     private int id ; 
+    
 
     public Pair(Project project, Student student1, Student student2, MyDate due_date ){
         this.project = project; 
@@ -12,6 +15,8 @@ public class Pair {
         this.student2 = student2 ; 
         this.due_date = due_date ; 
         oral_grade = -1 ; 
+        grade_s1 = -1 ; 
+        grade_s2 = -1; 
         id = project.get_nb_groupe(); 
         project.add_groupe();
     }
@@ -24,8 +29,6 @@ public class Pair {
         return project; 
     }
 
-   
-    
     public Student getStudent1(){
         return student1; 
     }
@@ -44,4 +47,31 @@ public class Pair {
     public String toString(){
         return student1.toString2() + student2.toString2() ; 
     }
+
+    public void setOralGrade(double n){
+        oral_grade = n ; 
+
+    }
+
+    public void setS1Grade(double n){
+        grade_s1 = n ; 
+
+    }
+
+    public void setS2Grade(double n){
+        grade_s1 = n ; 
+
+    }
+
+    /*public double calcul_final_grade(double grade, MyDate deadline, MyDate duDate){
+
+
+
+    }*/
+
+    public static boolean verif_grade(String g1, String g2, String g3){
+        return g1.matches("[+-]?\\d*(\\.\\d+)?") && g2.matches("[+-]?\\d*(\\.\\d+)?") && g3.matches("[+-]?\\d*(\\.\\d+)?");
+
+    }
+
 }

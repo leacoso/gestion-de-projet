@@ -51,7 +51,6 @@ public class ActionProjects implements ActionListener{
             check_all_projects(); 
             break; 
  
-
             case "Generate the students list" :
             check_all_projects();  
             break ;
@@ -256,7 +255,6 @@ public class ActionProjects implements ActionListener{
     
     }
 
-
     public void manipulation_project(Project project,String action_project) {
         switch (action_project) {
             case "Check this project" :
@@ -264,6 +262,7 @@ public class ActionProjects implements ActionListener{
             break ; 
 
             case "Grade students" : 
+            grade_students(project); 
             break ; 
 
             case "Add Pairs" :
@@ -280,7 +279,7 @@ public class ActionProjects implements ActionListener{
     }
 
     public void project_features(Project project){
-        
+
         Table_features model = new Table_features(project); 
         JTable table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -436,6 +435,126 @@ public class ActionProjects implements ActionListener{
 
     }
 
+    public void write_grade(Project project, Pair pair){
+        Menu.refresh(frame, 0);
+        frame.setLayout(null); 
+
+        JLabel oral_grade = new JLabel("Oral grade");
+        oral_grade.setBounds(100, 200, 300, 25);
+        frame.add(oral_grade);
+
+        JLabel s1_grade =  new JLabel("Student 1 grade ( "+ pair.getStudent1().getFirstname() + " " +pair.getStudent1().getLastname()+ ")");
+        s1_grade.setBounds(100, 230, 300, 25);
+        frame.add(s1_grade);
+
+        JLabel s2_grade = new JLabel("Student 2 grade ( "+ pair.getStudent2().getFirstname() + " " +pair.getStudent2().getLastname()+ ")");
+        s2_grade.setBounds(100, 260, 300, 25);
+        frame.add(s2_grade);
+
+        JTextField oral_grade_text = new JTextField(20);
+        oral_grade_text.setBounds(400, 200, 300, 25);
+        frame.add(oral_grade_text);
+
+        JTextField s1_grade_text = new JTextField(20);
+        s1_grade_text.setBounds(400, 230, 300, 25);
+        frame.add(s1_grade_text);
+
+        JTextField s2_grade_text = new JTextField(20);
+        s2_grade_text.setBounds(400, 260, 300, 25);
+        frame.add(s2_grade_text);
+
+        JButton OK = new JButton("OK"); 
+        OK.setBounds(400, 290, 300, 25); 
+        frame.add(OK); 
+
+        OK.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                    Container contentPane = frame.getContentPane(); 
+                    Component[] components = contentPane.getComponents(); 
+                    String oral_grade = ((JTextField)(components[3])).getText(); 
+                    String s1_grade = ((JTextField)(components[4])).getText(); 
+                    String s2_grade = ((JTextField)(components[5])).getText(); 
+
+                    if (Pair.verif_grade(oral_grade, s1_grade, s2_grade)){
+                        pair.setOralGrade(Double.parseDouble(oral_grade));
+                        pair.setS1Grade(Double.parseDouble(s1_grade)); 
+                        pair.setS2Grade(Double.parseDouble(s2_grade));
+                        int result = JOptionPane.showConfirmDialog(frame, "Your pair have been graduated", "Confirmation", JOptionPane.OK_CANCEL_OPTION);
+                        if (result == JOptionPane.OK_OPTION) { grade_students(project);  }  
+                    }
+                    else {
+                        write_grade( project, pair) ; 
+                    } 
+                
+            }
+    });
+                
+        
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void grade_students(Project project){ 
+        Menu.refresh(frame,0); 
+        frame.setLayout(null); 
+
+        ArrayList<Pair> pairs = Project.get_list_project_pair().get(project) ; 
+        Table_pair model = new Table_pair(pairs);
+        JTable table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        JButton grade = new JButton("Grade this pair");
+        grade.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                Pair pair = pairs.get(selectedRow) ;
+                if (pair.getGrade() != -1){
+                    int result = JOptionPane.showConfirmDialog(frame, "You have already gradead this pair, put 'Annuler' to go back and 'OK' if you want to change the grade", "Confirmation", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) { 
+                        pair.setOralGrade(-1);
+                        pair.setS1Grade(-1);
+                        pair.setS2Grade(-1);
+                        write_grade(project, pair); } 
+                    else {
+                        grade_students(project);
+                        
+                    }
+                }
+                else {
+                    write_grade(project,pair);
+                }
+                }}); 
+
+        JButton backButton = new JButton("back to menu");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu.refresh(frame,0);
+                frame.setLayout(null);
+                
+            }
+        });
+
+        Container contentPane = frame.getContentPane(); 
+        Component[] components = contentPane.getComponents(); 
+        for (Component co : components){co.setVisible(false);}
+        frame.setLayout(new BorderLayout());            
+        Box buttonBox = Box.createHorizontalBox();
+        buttonBox.add(Box.createHorizontalStrut(10)); 
+        buttonBox.add(backButton);
+        buttonBox.add(grade);
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(buttonBox, BorderLayout.SOUTH);
+        frame.revalidate();
+        frame.repaint();
+
+    }
     
 
           

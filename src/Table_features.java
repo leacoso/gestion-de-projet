@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 import javax.swing.table.AbstractTableModel;
 
 public class Table_features extends AbstractTableModel{
@@ -22,12 +23,7 @@ public class Table_features extends AbstractTableModel{
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        /*switch (rowIndex) {
-            case 0: return "Name";
-            case 1: return "Value";
-            default: return null;
-        }*/
-
+        
         if (columnIndex == 0 ){
             switch(rowIndex){
                 case 0 : return "ID";

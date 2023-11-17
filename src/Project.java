@@ -11,7 +11,8 @@ public class Project {
     private int nombre_de_groupes = 0 ; 
     private static int nb_id = 1 ;  
     private static HashMap<Project, ArrayList<Pair> > list_project_pair = new HashMap<>(); 
-    public ArrayList<Student> alone  = new ArrayList<>(); 
+    public ArrayList<Student> alone  = new ArrayList<>();
+     
 
 
     
@@ -96,15 +97,16 @@ public class Project {
         return " ID :  " + String.valueOf(id) + " \n  Subject : "   +  sujet + "\n deadline  : " + deadline.toString(); 
     }
 
-   public String get_title(){
-    return id + " , " + sujet ; 
+    public String get_title(){
+        return id + " , " + sujet ; 
    }
-
 
     public double different_grades(int choice){
         // Création d'un tableau pour stocker les notes pour obtenir la meilleure, la pire,
         // la moyenne et la médiane
         ArrayList<Pair> pairs = Project. get_list_project_pair().get(this); 
+        int lenght = pairs.size(); 
+        
         ArrayList<Double> dif_grades = new ArrayList<>();
         if (choice<1 ){choice = 1; }
         if (choice > 5){choice = 5; }
@@ -121,25 +123,28 @@ public class Project {
 
         // Trier dans l'odre croissant les notes
         Collections.sort(dif_grades);
-        if (dif_grades.size() == 0 ){ return -1 ;}
+        
         switch (choice) {
 
             case 1: // Worst grade
+            if (dif_grades.size() == 0 ){ return -1 ;}
             return dif_grades.get(0);
         
             case 2: //Best grade
+            if (dif_grades.size() == 0 ){ return -1 ;}
             int last = dif_grades.size() - 1;
             return dif_grades.get(last);
             
             case 3: //Average 
+            if (dif_grades.size() == 0 ){ return -1 ;}
             double sum = 0.0;
             for (double grade : dif_grades) {sum += grade;}
             double average = sum / dif_grades.size();
             return average ; 
             
             case 4: //Median
+            if (dif_grades.size() == 0 ){ return -1 ;}
             int size = dif_grades.size();
-     
              if (size % 2 == 0) {
                  // Si la taille de la liste est paire, la médiane est la moyenne des deux valeurs du milieu
                  int middleIndex1 = size / 2 - 1;
@@ -151,16 +156,17 @@ public class Project {
                  return dif_grades.get(middleIndex);
              }
                
-
             case 5 : //Number of pairs
-            return pairs.size(); 
+            return lenght ; 
 
             default:
                 break;
         }
+        
         return -1 ; 
 
     }
+
 
 
 }
