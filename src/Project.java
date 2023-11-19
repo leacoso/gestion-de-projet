@@ -4,106 +4,77 @@ import java.util.Collections;
 
 public class Project {
     private int id; 
-    private Lecture matiere ; 
+    private Lecture lecture ; 
     private String sujet ; 
     private MyDate deadline ;
     private String explication ; 
-    private int nombre_de_groupes = 0 ; 
+    private int number_of_groups = 0 ; 
     private static int nb_id = 1 ;  
     private static HashMap<Project, ArrayList<Pair> > list_project_pair = new HashMap<>(); 
     public ArrayList<Student> alone  = new ArrayList<>();
-     
-
-
     
-    public Project(Lecture matiere, String sujet, MyDate myDate, String explication){
+    public Project(Lecture lecture, String sujet, MyDate myDate, String explication){
+        // Initialization and incrementation of project ID
         id = nb_id ; 
         nb_id++ ;
+        // Setting project details
         this.explication = explication; 
-        this.matiere = matiere;
+        this.lecture = lecture;
         this.sujet = sujet;
         deadline = myDate;
-        nombre_de_groupes = 0;
+        number_of_groups = 0;
+        // Adding the project to the list of projects
         add_project(); 
-        alone = matiere.lecture_student ; 
+        // Initializing list of students without groups
+        alone = lecture.get_lecture_student() ; 
     }
 
     public Project(){
         id = nb_id ; 
         nb_id++ ; 
-        nombre_de_groupes = 0 ; 
+        number_of_groups = 0 ; 
         sujet = null; 
-        matiere = null; 
+        lecture = null; 
         deadline = null ; 
         explication = null; 
     }
 
-    public void add_project(){
-        list_project_pair.put(this, new ArrayList<>()); 
-    }
-    public  static HashMap<Project, ArrayList<Pair> > get_list_project_pair(){
-        return list_project_pair ; 
-    }
+    // Methods for managing projects and their associated pairs, getters, setters, and utility functions
 
-    public static void add_pair_to_project(Project project, Pair p){
-        list_project_pair.get(project).add(p); 
-    }
+    public void add_project(){ list_project_pair.put(this, new ArrayList<>()); }
 
-    public static void add_pairs_to_project(Project project , ArrayList<Pair> list_pairs){
-        list_project_pair.get(project).addAll(list_pairs); 
-    }
+    public  static HashMap<Project, ArrayList<Pair> > get_list_project_pair(){ return list_project_pair ; }
+
+    public static void add_pair_to_project(Project project, Pair p){ list_project_pair.get(project).add(p); }
+
+    public static void add_pairs_to_project(Project project , ArrayList<Pair> list_pairs){ list_project_pair.get(project).addAll(list_pairs);}
    
-    public int getid() {
-        return id;
-    }
+    public int getid() {return id;}
 
-    public String getExplication(){
-        return explication ; 
-    }
+    public String getExplication(){return explication ; }
 
-    public void setMatiere(Lecture matiere) {
-        this.matiere = matiere;
-    }
+    public Lecture getMatiere() {return lecture;}
 
-    public Lecture getMatiere() {
-        return matiere;
-    }
+    public String getSujet() { return sujet;}
 
-    public void setSujet(String sujet) {
-        this.sujet = sujet;
-    }
+    public MyDate getdeadline() {return deadline;}
 
-    public String getSujet() {
-        return sujet;
-    }
+    public void setMatiere(Lecture lecture) {this.lecture = lecture;}
 
-    public void setdeadline(MyDate deadline) {
-        this.deadline = deadline;
-    }
+    public void setSujet(String sujet) { this.sujet = sujet;}
 
-    public MyDate getdeadline() {
-        return deadline;
-    }
+    public void setdeadline(MyDate deadline) {this.deadline = deadline;}
 
-    public void add_groupe(){
-        nombre_de_groupes += 1;
-    }
+    public void add_groupe(){number_of_groups += 1;}
 
-    public int get_nb_groupe(){
-        return nombre_de_groupes;
-    }
+    public int get_nb_groupe(){ return number_of_groups;}
     
-    public String toString(){
-        return " ID :  " + String.valueOf(id) + " \n  Subject : "   +  sujet + "\n deadline  : " + deadline.toString(); 
-    }
+    public String toString(){return " ID :  " + String.valueOf(id) + " \n  Subject : "   +  sujet + "\n deadline  : " + deadline.toString(); }
 
-    public String get_title(){
-        return id + " , " + sujet ; 
-   }
+    public String get_title(){return id + " , " + sujet ; }
 
+    //This function calculates different grades statistics based on a choice parameter
     public double different_grades(int choice){
-        // Création d'un tableau pour stocker les notes pour obtenir la meilleure, la pire,
-        // la moyenne et la médiane
         ArrayList<Pair> pairs = Project. get_list_project_pair().get(this); 
         int lenght = pairs.size(); 
         
@@ -111,17 +82,14 @@ public class Project {
         if (choice<1 ){choice = 1; }
         if (choice > 5){choice = 5; }
 
-        //pour chaque binome de la liste des binomes du Projet p
+        
         int nb = 0 ; 
-
         for (Pair pair : pairs) {
             if (pair.getGrade() != -1){
                 nb ++ ; 
                 dif_grades.add(pair.getGrade());
             }  
         }
-
-        // Trier dans l'odre croissant les notes
         Collections.sort(dif_grades);
         
         switch (choice) {
@@ -166,7 +134,5 @@ public class Project {
         return -1 ; 
 
     }
-
-
 
 }

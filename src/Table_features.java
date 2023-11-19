@@ -1,29 +1,23 @@
 import java.util.ArrayList;
-
-
 import javax.swing.table.AbstractTableModel;
 
+
+//This class create a table to print all the features of 
 public class Table_features extends AbstractTableModel{
     
     private final String[] columnNames = {"Name ", "Value"}; 
     private Project project ; 
     
-    public Table_features(Project project ){
-        this.project = project;
-    }
-    @Override
-    public int getRowCount() {
-        return 10; 
-    }
+    public Table_features(Project project ){ this.project = project; }
 
     @Override
-    public int getColumnCount() {
-        return 2 ;
-    }
+    public int getRowCount() { return 10; }
+
+    @Override
+    public int getColumnCount() { return 2 ; }
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        
         if (columnIndex == 0 ){
             switch(rowIndex){
                 case 0 : return "ID";
@@ -59,9 +53,7 @@ public class Table_features extends AbstractTableModel{
     }
 
     @Override
-    public String getColumnName(int column) {
-        return columnNames[column];
-    }
+    public String getColumnName(int column) { return columnNames[column]; }
 
 
 }

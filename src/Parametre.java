@@ -1,5 +1,3 @@
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -7,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+
+
 
 public class Parametre implements ActionListener{
     private JFrame frame ;  
@@ -16,8 +17,6 @@ public class Parametre implements ActionListener{
         frame = f; 
         this.action = action; }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         Menu.refresh(frame,0);
@@ -25,21 +24,14 @@ public class Parametre implements ActionListener{
 
             case "Deconnexion": 
 
-            JMenuBar menubar = frame.getJMenuBar();
-            menubar.removeAll();
-            frame.getContentPane().removeAll();
-            frame.revalidate();
-            frame.repaint();
+            Menu.refresh(frame, 0); //Remove all the components (Label, Text) of the frame. 
+            frame.setJMenuBar(null);  //Remove the menu with the lectures
             Menu.identification(frame);
-            frame.revalidate();
-            frame.repaint();
-            
             break ; 
 
             case "A propos":
 
-            frame.revalidate(); 
-            frame.repaint(); 
+            Menu.refresh(frame, 0);
             String resume = "Gestion des étudiants : permet de créer et de gérer les profils des étudiants, y compris leurs informations personnelles, leurs compétences et leurs projets.\n Gestion des binômes projet : permet de créer et de gérer les binômes projet, y compris les étudiants qui les composent et les rôles de chacun.\n" +
             "Gestion des tâches : permet de créer et de gérer les tâches, y compris leurs descriptions, leurs deadlines et leurs statuts.\n" +
             "Gestion des deadlines : permet de définir et de suivre les deadlines des tâches.\n" +
@@ -64,8 +56,8 @@ public class Parametre implements ActionListener{
                             "L'application de gestion de projets pour les étudiants de Dauphine est un outil précieux qui peut aider les étudiants à réussir leurs projets. Elle est facile à utiliser et offre de nombreuses fonctionnalités pour améliorer l'organisation, la communication et la collaboration.\n" +
                             "\n" +
                             "J'ai ajouté une ligne vide à la fin pour faciliter la lecture.";
+                            
 
-            frame.setLayout(null); 
             JLabel message = new JLabel("<html>" + resume.replace("\n", "<br/>") + "</html>");            
             message.setBounds(20, 20, 960, 560);
             frame.add(message);
@@ -73,9 +65,23 @@ public class Parametre implements ActionListener{
             frame.revalidate(); 
             frame.repaint(); 
             break; 
-                    
+
+            case "Exit" : 
+            Pause();
+            break ;  
+ 
                 }
             }
+            public void Pause(){
+            Menu.refresh(frame, 0); //Remove all the components (Label, Text) of the frame. 
+            frame.setJMenuBar(null);  //Remove the menu with the lectures
+            JButton continu = new JButton ("Log in");
+            continu.setBounds(330, 200, 400, 50);
+            frame.add(continu);
+            continu.addActionListener(new Parametre(frame ,"Deconnexion"));
+        
+}
+        
             
     
 }

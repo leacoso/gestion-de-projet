@@ -1,7 +1,10 @@
+
 public abstract class Person {
     protected String firstname; 
     protected String lastname; 
+    private static final long serialVersionUID = 1L;
     
+    //Abstract class whose permit to implement the classes Student and Teacher 
 
     public Person(){
         this.firstname = null;
@@ -18,21 +21,13 @@ public abstract class Person {
         this.lastname = p.lastname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+    public void setFirstname(String firstname) { this.firstname = firstname;}
 
-    public String getFirstname(){
-        return firstname;
-    }
+    public String getFirstname(){return firstname;}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+    public void setLastname(String lastname) {this.lastname = lastname;}
 
-    public String getLastname() {
-        return lastname;
-    }
+    public String getLastname() {return lastname;}
 
     
 
